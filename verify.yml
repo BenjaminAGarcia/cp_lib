@@ -1,0 +1,27 @@
+name: Verify
+
+on:
+  push:
+    branches:
+      - main  # 或者你想运行验证的分支
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install online-judge-verify-helper
+        run: pip3 install online-judge-verify-helper
+
+      - name: Run verification
+        run: oj-verify run
